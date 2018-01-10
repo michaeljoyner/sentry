@@ -1,0 +1,38 @@
+{
+  "name": "sentry",
+  "version": "0.1.0",
+  "description": "An app for keeping an eye on my sites",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha --require tests/setup.js --watch tests/**/*.spec.js",
+    "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "author": "Michael Joyner",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "mocha": "^4.1.0",
+    "moxios": "^0.4.0",
+    "sinon": "^4.1.3",
+    "tailwindcss": "^0.4.0"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "body-parser": "^1.18.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "knex": "^0.14.2",
+    "laravel-mix": "^1.7.2",
+    "moment": "^2.20.1",
+    "sqlite3": "^3.1.13",
+    "vue": "^2.5.13",
+    "vue-router": "^3.0.1"
+  }
+}
