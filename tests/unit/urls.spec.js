@@ -3,6 +3,8 @@ let assert = require("chai").assert;
 let Url = require("../../app/models/Url");
 let assertDatabaseMissing = require("../utilities/assertDatabaseMissing");
 let assertDatabaseHas = require("../utilities/assertDatabaseHas");
+let ReportSummary = require("../../app/models/ReportSummary");
+let StatusReport = require("../../app/models/StatusReport");
 
 describe("The Url Class", () => {
   beforeEach(async () => {
@@ -81,5 +83,69 @@ describe("The Url Class", () => {
       url: "http://one.test",
       should_report: 1
     });
+  });
+
+  it("can get its report summary", async () => {
+    var url = await Url.create("http://one.test");
+
+    await ReportSummary.tally({
+      url_id: url.id,
+      successes: 123,
+      failures: 71
+    });
+
+    assert.deepEqual(
+      {
+        successes: 123,
+        failures: 71
+      },
+      await url.reportSummary()
+    );
+  });
+
+  it("returns a null summary if none exists in db", async () => {
+    var url = await Url.create("https;//test.test");
+
+    assert.deepEqual(
+      {
+        successes: 0,
+        failures: 0
+      },
+      await url.reportSummary()
+    );
+  });
+
+  it("can query its recent reports", async () => {
+    var url = await Url.create("http://one.test");
+
+    await StatusReport.create({
+      url_id: url.id,
+      status: 200,
+      message: ""
+    });
+
+    await StatusReport.create({
+      url_id: 99,
+      status: 200,
+      message: ""
+    });
+
+    await StatusReport.create({
+      url_id: url.id,
+      status: 400,
+      message: ""
+    });
+
+    await StatusReport.create({
+      url_id: url.id,
+      status: 200,
+      message: ""
+    });
+
+    url_reports = await url.recentReports();
+
+    assert.isArray(url_reports);
+    assert.equal(3, url_reports.length);
+    assert.notExists(url_reports.find(report => report.url_id === 99));
   });
 });

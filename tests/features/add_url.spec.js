@@ -31,15 +31,15 @@ describe("Adding a Url", () => {
     await assertDatabaseHas("urls", { url: "https://test.test" });
   });
 
-  it("returns the url data when created", async () => {
+  it("multiple urls can be added", async () => {
     var res = await chai
       .request(server)
       .post("/urls")
-      .send({ url: "https://test.test" });
+      .send({ url: ["https://test.test", "https://test_two.test"] });
 
-    var response_data = res.body;
+    assert.equal(res.status, 200);
 
-    assert.exists(response_data.id);
-    assert.equal(response_data.url, "https://test.test");
+    await assertDatabaseHas("urls", { url: "https://test.test" });
+    await assertDatabaseHas("urls", { url: "https://test_two.test" });
   });
 });

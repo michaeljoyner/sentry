@@ -1,4 +1,7 @@
 let db = require("../../database/connection");
+let moment = require("moment");
+let ReportSummary = require("../models/ReportSummary");
+let StatusReport = require("../models/StatusReport");
 
 class Url {
   constructor(url_data) {
@@ -18,7 +21,7 @@ class Url {
     var [id] = await db("urls").insert({
       url: url,
       should_report: true,
-      created_at: new Date().getTime()
+      created_at: moment().unix()
     });
 
     return await Url.find(id);
@@ -53,8 +56,28 @@ class Url {
       .where("id", this.id)
       .update({
         should_report: this.should_report,
-        updated_at: new Date().getTime()
+        updated_at: moment().unix()
       });
+  }
+
+  async reportSummary() {
+    const summary = await ReportSummary.getByUrlId(this.id);
+
+    if (!summary) {
+      return {
+        successes: 0,
+        failures: 0
+      };
+    }
+
+    return {
+      successes: summary.successes,
+      failures: summary.failures
+    };
+  }
+
+  async recentReports() {
+    return StatusReport.withUrlId(this.id);
   }
 }
 

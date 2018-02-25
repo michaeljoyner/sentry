@@ -1,4 +1,5 @@
 let db = require("../../database/connection");
+let moment = require("moment");
 
 class StatusReport {
   constructor(report_data) {
@@ -28,10 +29,18 @@ class StatusReport {
       url_id: status_attributes.url_id,
       status: status_attributes.status,
       message: status_attributes.message,
-      created_at: new Date().getTime()
+      created_at: status_attributes.created_at || moment().unix()
     });
 
     return await StatusReport.find(id);
+  }
+
+  async update(update_attributes) {
+    await db("status_reports")
+      .where("id", this.id)
+      .update(update_attributes);
+
+    return await StatusReport.find(this.id);
   }
 
   static async find(id) {
@@ -40,6 +49,27 @@ class StatusReport {
       .first();
 
     return new StatusReport(report_data);
+  }
+
+  static async olderThan(timestamp) {
+    const reports_data = await db("status_reports").where(
+      "created_at",
+      "<",
+      timestamp
+    );
+
+    return reports_data.map(report => new StatusReport(report));
+  }
+
+  static async withUrlId(url_id) {
+    const reports_data = await db("status_reports").where("url_id", url_id);
+    return reports_data.map(report => new StatusReport(report));
+  }
+
+  async del() {
+    await db("status_reports")
+      .where("id", this.id)
+      .del();
   }
 
   isOkay() {
