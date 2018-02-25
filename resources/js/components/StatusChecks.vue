@@ -31,7 +31,7 @@ export default {
         (a, b) => b.created_at - a.created_at
       )[0];
 
-      return moment(most_recent.created_at).fromNow();
+      return moment.unix(most_recent.created_at).fromNow();
     },
 
     success_percent() {

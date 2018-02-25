@@ -32594,7 +32594,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return b.created_at - a.created_at;
       })[0];
 
-      return __WEBPACK_IMPORTED_MODULE_1_moment___default()(most_recent.created_at).fromNow();
+      return __WEBPACK_IMPORTED_MODULE_1_moment___default.a.unix(most_recent.created_at).fromNow();
     },
     success_percent: function success_percent() {
       var _this = this;
