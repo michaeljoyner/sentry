@@ -21,7 +21,9 @@ class Check {
       return;
     }
 
-    Check.report(url, report);
+    if (url.should_report) {
+      Check.report(url, report);
+    }
   }
 
   static async report(url, report) {

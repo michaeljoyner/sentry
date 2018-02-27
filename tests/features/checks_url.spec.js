@@ -60,4 +60,17 @@ describe("Doing site checks", () => {
 
     assert.isTrue(Check.report.calledOnce);
   });
+
+  it("does not report for a stood down url", async () => {
+    var url = await Url.create("https://test.test");
+    url.standDown();
+
+    moxios.stubRequest("https://test.test", {
+      status: 400
+    });
+
+    await Check.onUrl(url);
+
+    assert.isFalse(Check.report.calledOnce);
+  });
 });
