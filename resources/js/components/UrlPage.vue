@@ -68,7 +68,7 @@ export default {
     checks() {
       if (this.url.recent_reports) {
         return this.url.recent_reports.sort(
-          (a, b) => b.created_at - a.created_at
+          (a, b) => a.created_at - b.created_at
         );
       }
       return [];
