@@ -7,7 +7,7 @@ class Check {
     try {
       resp = await axios.get(url.url);
     } catch (err) {
-      resp = err.response || { status: 500 };
+      resp = err.response || { status: 666 };
     }
 
     var report = await StatusReport.create({
