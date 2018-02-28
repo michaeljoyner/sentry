@@ -2,9 +2,9 @@
   <div>
       <p class="p-3 text-sm text-grey">Reporting on {{ reporting_total }} urls, with {{ stood_down_total }} stood down.</p>
       <div class="p-3">
-          <div v-for="url in urls" :key="url.id" class="my-2">
-            <router-link :to="`/pages/${url.id}`">
-              <div class="inline-block h-2 w-2 mr-2 rounded-full" :class="{'bg-green': url.should_report, 'bg-red': !url.should_report}"></div><span class="text-xs">{{ url.url }}</span>
+          <div v-for="url in urls" :key="url.id" class="my-2 py-2 border-b border-grey-light">
+            <router-link :to="`/pages/${url.id}`" class="no-underline">
+              <div class="inline-block h-2 w-2 mr-2 rounded-full" :class="{'bg-green': url.should_report, 'bg-red': !url.should_report}"></div><span class="text-sm text-black">{{ url.url }}</span>
             </router-link>
           </div>
       </div>

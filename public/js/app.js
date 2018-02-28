@@ -32430,18 +32430,27 @@ var render = function() {
       _vm._l(_vm.urls, function(url) {
         return _c(
           "div",
-          { key: url.id, staticClass: "my-2" },
+          { key: url.id, staticClass: "my-2 py-2 border-b border-grey-light" },
           [
-            _c("router-link", { attrs: { to: "/pages/" + url.id } }, [
-              _c("div", {
-                staticClass: "inline-block h-2 w-2 mr-2 rounded-full",
-                class: {
-                  "bg-green": url.should_report,
-                  "bg-red": !url.should_report
-                }
-              }),
-              _c("span", { staticClass: "text-xs" }, [_vm._v(_vm._s(url.url))])
-            ])
+            _c(
+              "router-link",
+              {
+                staticClass: "no-underline",
+                attrs: { to: "/pages/" + url.id }
+              },
+              [
+                _c("div", {
+                  staticClass: "inline-block h-2 w-2 mr-2 rounded-full",
+                  class: {
+                    "bg-green": url.should_report,
+                    "bg-red": !url.should_report
+                  }
+                }),
+                _c("span", { staticClass: "text-sm text-black" }, [
+                  _vm._v(_vm._s(url.url))
+                ])
+              ]
+            )
           ],
           1
         )
@@ -33349,13 +33358,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     summary_percent: function summary_percent() {
       if (this.has_summary && this.summary_pass * this.summary_fail !== 0) {
-        return this.summary_pass / (this.summary_pass + this.summary_fail);
+        return (this.summary_pass / (this.summary_pass + this.summary_fail) * 100).toPrecision(3);
       }
       return 0;
     },
     checks: function checks() {
       if (this.url.recent_reports) {
-        return this.url.recent_reports;
+        return this.url.recent_reports.sort(function (a, b) {
+          return a.created_at - b.created_at;
+        });
       }
       return [];
     }
