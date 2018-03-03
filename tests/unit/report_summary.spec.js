@@ -82,4 +82,42 @@ describe("Report Summaries", () => {
       failures: 8
     });
   });
+
+  it("can return the grand totals for all summaries", async () => {
+    await ReportSummary.tally({
+      url_id: 1,
+      successes: 200,
+      failures: 3
+    });
+    await ReportSummary.tally({
+      url_id: 1,
+      successes: 500,
+      failures: 9
+    });
+    await ReportSummary.tally({
+      url_id: 1,
+      successes: 100,
+      failures: 0
+    });
+    await ReportSummary.tally({
+      url_id: 2,
+      successes: 1200,
+      failures: 33
+    });
+    await ReportSummary.tally({
+      url_id: 2,
+      successes: 2000,
+      failures: 300
+    });
+
+    const grand_totals = await ReportSummary.grandTotals();
+
+    const expected = {
+      urls: 2,
+      successes: 4000,
+      failures: 345
+    };
+
+    assert.deepEqual(expected, grand_totals);
+  });
 });

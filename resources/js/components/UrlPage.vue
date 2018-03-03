@@ -59,13 +59,14 @@ export default {
     },
 
     summary_percent() {
-      if (this.has_summary && this.summary_pass * this.summary_fail !== 0) {
+      if (this.has_summary && this.summary_pass + this.summary_fail !== 0) {
         return (
           this.summary_pass /
           (this.summary_pass + this.summary_fail) *
           100
         ).toPrecision(3);
       }
+
       return 0;
     },
 

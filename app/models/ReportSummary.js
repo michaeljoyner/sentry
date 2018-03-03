@@ -47,6 +47,14 @@ class ReportSummary {
     }
   }
 
+  static async grandTotals() {
+    return await db("report_summaries")
+      .count("id as urls")
+      .sum("successes as successes")
+      .sum("failures as failures")
+      .first();
+  }
+
   async update(update_data) {
     await db("report_summaries")
       .where("id", this.id)

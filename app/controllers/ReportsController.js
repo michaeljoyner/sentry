@@ -1,6 +1,17 @@
 let StatusReport = require("../models/StatusReport");
+let ReportSummary = require("../models/ReportSummary");
 
 exports.index = async function(req, res, next) {
-  var reports = await StatusReport.latest(100);
-  return res.json(reports);
+  const grand_totals = await ReportSummary.grandTotals();
+  const recent_faliures = await StatusReport.recentFailures();
+  const last_checked = await StatusReport.lastTimeReported();
+
+  return res.json({
+    grand_totals,
+    recent_failures: recent_faliures.map(f => ({
+      id: f.id,
+      page_name: f.page_name
+    })),
+    last_checked: last_checked.unix()
+  });
 };

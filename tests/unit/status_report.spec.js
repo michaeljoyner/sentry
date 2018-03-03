@@ -4,6 +4,7 @@ let db = require("../../database/connection");
 let assertDatabaseHas = require("../utilities/assertDatabaseHas");
 let assertDatabaseMissing = require("../utilities/assertDatabaseMissing");
 let moment = require("moment");
+let Url = require("../../app/models/Url");
 
 describe("Status Reports", () => {
   beforeEach(async () => {
@@ -256,5 +257,74 @@ describe("Status Reports", () => {
     reports.forEach(report => {
       assert.instanceOf(report, StatusReport);
     });
+  });
+
+  it("can query recent failed statues checks", async () => {
+    const page = await Url.create("https://test.test");
+
+    const failA = await StatusReport.create({
+      url_id: page.id,
+      status: 500,
+      message: "Test one"
+    });
+
+    await StatusReport.create({
+      url_id: page.id,
+      status: 200,
+      message: "Test two"
+    });
+
+    const failB = await StatusReport.create({
+      url_id: page.id,
+      status: 400,
+      message: "Test three"
+    });
+
+    const failures = await StatusReport.recentFailures();
+
+    assert.equal(2, failures.length);
+    assert.exists(failures.find(failure => failure.id == failA.id));
+    assert.exists(failures.find(failure => failure.id == failB.id));
+
+    assert.equal("https://test.test", failures[0].page_name);
+    assert.equal("https://test.test", failures[0].page_name);
+  });
+
+  it("can get the most recent time reported", async () => {
+    const page = await Url.create("https://test.test");
+    const most_recent_timestamp = moment()
+      .subtract(5, "minutes")
+      .unix();
+    const timestampB = moment()
+      .subtract(10, "minutes")
+      .unix();
+    const timestampC = moment()
+      .subtract(15, "minutes")
+      .unix();
+
+    await StatusReport.create({
+      url_id: page.id,
+      status: 500,
+      message: "Test one",
+      created_at: timestampB
+    });
+
+    await StatusReport.create({
+      url_id: page.id,
+      status: 200,
+      message: "Test two",
+      created_at: most_recent_timestamp
+    });
+
+    await StatusReport.create({
+      url_id: page.id,
+      status: 400,
+      message: "Test three",
+      created_at: timestampC
+    });
+
+    const most_recent = await StatusReport.lastTimeReported();
+
+    assert.equal(most_recent_timestamp, most_recent.unix());
   });
 });

@@ -1,10 +1,30 @@
 <template>
   <div>
-      <p class="p-2">Last checked: {{ last_checked_at }}</p>
-      <div class="check-grid p-2 flex flex-wrap">
-          <div class="check rounded-full w-4 h-4 m-2" :class="{'bg-green': checkIsOkay(check), 'bg-red': !checkIsOkay(check)}" v-for="check in checks" :key="check.id">
-          </div>
+    <div class="p-4 m-4 shadow">
+      <p class="text-green text-sm font-bold">Last checked</p>
+      <p class="text-grey-darkest">{{ last_checked_at }}</p>
+    </div>
+      
+      <div class="flex p-4 my-8 mx-4 shadow">
+        <div class="w-1/3">
+          <p class="text-green text-sm font-bold">Total Pages</p>
+          <p class="text-green text-3xl font-black">{{ this.stats.grand_totals.urls }}</p>
+        </div>
+        <div class="w-1/3">
+          <p class="text-green text-sm font-bold">Passed</p>
+          <p class="text-green text-3xl font-black">{{ this.stats.grand_totals.successes }}</p>
+        </div>
+        <div class="w-1/3">
+          <p class="text-green text-sm font-bold">Failed</p>
+          <p class="text-green text-3xl font-black">{{ this.stats.grand_totals.failures }}</p>
+        </div>
       </div>
+
+      <div v-for="failure in stats.recent_failures" :key="failure.id" class="p-4 m-4">
+        <p class="text-red text-sm font-bold">Failed: {{ formattedDate(failure.created_at) }}</p>
+        <p class="text-grey-darkest whitespace-wrap">{{ failure.page_name }}</p>
+      </div>
+      
       <div class="fixed pin-b pin-r m-4 font-black text-green">
           <span class="text-4xl">{{ success_percent }}%</span>
       </div>
@@ -18,45 +38,46 @@ import moment from "moment";
 export default {
   data() {
     return {
-      checks: []
+      stats: {
+        grand_totals: {
+          urls: 0,
+          successes: 0,
+          failures: 0
+        },
+        recent_failures: [],
+        last_checked: null
+      }
     };
   },
 
   computed: {
     last_checked_at() {
-      if (!this.checks.length) {
+      if (!this.stats.last_checked) {
         return "";
       }
-      const most_recent = this.checks.sort(
-        (a, b) => b.created_at - a.created_at
-      )[0];
 
-      return moment.unix(most_recent.created_at).fromNow();
+      return moment.unix(this.stats.last_checked).fromNow();
     },
 
     success_percent() {
-      const passed = this.checks.filter(check => this.checkIsOkay(check))
-        .length;
-      const total = this.checks.length;
+      const passed = this.stats.grand_totals.successes;
+      const total =
+        this.stats.grand_totals.successes + this.stats.grand_totals.failures;
 
       return Math.round(passed / total * 100);
     }
   },
 
   mounted() {
-    this.fetchChecks();
+    this.fetchStats();
   },
 
   methods: {
-    fetchChecks() {
+    fetchStats() {
       axios
         .get("/status-reports")
-        .then(({ data }) => (this.checks = data))
+        .then(({ data }) => (this.stats = data))
         .catch(err => console.log(err));
-    },
-
-    checkIsOkay(check) {
-      return check.status / 100 < 4;
     }
   }
 };

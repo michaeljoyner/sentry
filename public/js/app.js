@@ -32554,7 +32554,7 @@ exports = module.exports = __webpack_require__(7)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -32582,6 +32582,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -32589,52 +32609,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      checks: []
+      stats: {
+        grand_totals: {
+          urls: 0,
+          successes: 0,
+          failures: 0
+        },
+        recent_failures: [],
+        last_checked: null
+      }
     };
   },
 
 
   computed: {
     last_checked_at: function last_checked_at() {
-      if (!this.checks.length) {
+      if (!this.stats.last_checked) {
         return "";
       }
-      var most_recent = this.checks.sort(function (a, b) {
-        return b.created_at - a.created_at;
-      })[0];
 
-      return __WEBPACK_IMPORTED_MODULE_1_moment___default.a.unix(most_recent.created_at).fromNow();
+      return __WEBPACK_IMPORTED_MODULE_1_moment___default.a.unix(this.stats.last_checked).fromNow();
     },
     success_percent: function success_percent() {
-      var _this = this;
-
-      var passed = this.checks.filter(function (check) {
-        return _this.checkIsOkay(check);
-      }).length;
-      var total = this.checks.length;
+      var passed = this.stats.grand_totals.successes;
+      var total = this.stats.grand_totals.successes + this.stats.grand_totals.failures;
 
       return Math.round(passed / total * 100);
     }
   },
 
   mounted: function mounted() {
-    this.fetchChecks();
+    this.fetchStats();
   },
 
 
   methods: {
-    fetchChecks: function fetchChecks() {
-      var _this2 = this;
+    fetchStats: function fetchStats() {
+      var _this = this;
 
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get("/status-reports").then(function (_ref) {
         var data = _ref.data;
-        return _this2.checks = data;
+        return _this.stats = data;
       }).catch(function (err) {
         return console.log(err);
       });
-    },
-    checkIsOkay: function checkIsOkay(check) {
-      return check.status / 100 < 4;
     }
   }
 });
@@ -32935,32 +32953,75 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("p", { staticClass: "p-2" }, [
-      _vm._v("Last checked: " + _vm._s(_vm.last_checked_at))
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "check-grid p-2 flex flex-wrap" },
-      _vm._l(_vm.checks, function(check) {
-        return _c("div", {
-          key: check.id,
-          staticClass: "check rounded-full w-4 h-4 m-2",
-          class: {
-            "bg-green": _vm.checkIsOkay(check),
-            "bg-red": !_vm.checkIsOkay(check)
-          }
-        })
-      })
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "fixed pin-b pin-r m-4 font-black text-green" }, [
-      _c("span", { staticClass: "text-4xl" }, [
-        _vm._v(_vm._s(_vm.success_percent) + "%")
-      ])
-    ])
-  ])
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "p-4 m-4 shadow" }, [
+        _c("p", { staticClass: "text-green text-sm font-bold" }, [
+          _vm._v("Last checked")
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-grey-darkest" }, [
+          _vm._v(_vm._s(_vm.last_checked_at))
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "flex p-4 my-8 mx-4 shadow" }, [
+        _c("div", { staticClass: "w-1/3" }, [
+          _c("p", { staticClass: "text-green text-sm font-bold" }, [
+            _vm._v("Total Pages")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-green text-3xl font-black" }, [
+            _vm._v(_vm._s(this.stats.grand_totals.urls))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-1/3" }, [
+          _c("p", { staticClass: "text-green text-sm font-bold" }, [
+            _vm._v("Passed")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-green text-3xl font-black" }, [
+            _vm._v(_vm._s(this.stats.grand_totals.successes))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-1/3" }, [
+          _c("p", { staticClass: "text-green text-sm font-bold" }, [
+            _vm._v("Failed")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-green text-3xl font-black" }, [
+            _vm._v(_vm._s(this.stats.grand_totals.failures))
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.stats.recent_failures, function(failure) {
+        return _c("div", { key: failure.id, staticClass: "p-4 m-4" }, [
+          _c("p", { staticClass: "text-red text-sm font-bold" }, [
+            _vm._v("Failed: " + _vm._s(_vm.formattedDate(failure.created_at)))
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-grey-darkest whitespace-wrap" }, [
+            _vm._v(_vm._s(failure.page_name))
+          ])
+        ])
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "fixed pin-b pin-r m-4 font-black text-green" },
+        [
+          _c("span", { staticClass: "text-4xl" }, [
+            _vm._v(_vm._s(_vm.success_percent) + "%")
+          ])
+        ]
+      )
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -33357,9 +33418,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return 0;
     },
     summary_percent: function summary_percent() {
-      if (this.has_summary && this.summary_pass * this.summary_fail !== 0) {
+      if (this.has_summary && this.summary_pass + this.summary_fail !== 0) {
         return (this.summary_pass / (this.summary_pass + this.summary_fail) * 100).toPrecision(3);
       }
+
       return 0;
     },
     checks: function checks() {

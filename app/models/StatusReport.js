@@ -8,6 +8,7 @@ class StatusReport {
     this.status = report_data.status;
     this.message = report_data.message;
     this.created_at = report_data.created_at;
+    this.page_name = report_data.page_name || null;
   }
 
   static async all() {
@@ -61,9 +62,28 @@ class StatusReport {
     return reports_data.map(report => new StatusReport(report));
   }
 
+  static async recentFailures() {
+    const reports_data = await db
+      .select(["status_reports.*", "urls.url as page_name"])
+      .from("status_reports")
+      .where("status", ">=", 400)
+      .leftJoin("urls", "status_reports.url_id", "urls.id")
+      .limit(10);
+
+    return reports_data.map(report => new StatusReport(report));
+  }
+
   static async withUrlId(url_id) {
     const reports_data = await db("status_reports").where("url_id", url_id);
     return reports_data.map(report => new StatusReport(report));
+  }
+
+  static async lastTimeReported() {
+    const recent = await db("status_reports")
+      .orderBy("created_at", "desc")
+      .first();
+
+    return moment.unix(recent.created_at);
   }
 
   async del() {
