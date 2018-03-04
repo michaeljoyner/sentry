@@ -78,6 +78,10 @@ export default {
         .get("/status-reports")
         .then(({ data }) => (this.stats = data))
         .catch(err => console.log(err));
+    },
+
+    formattedDate(timestamp) {
+      return moment.unix(timestamp).format("DD MMM YYYY, h:mm a");
     }
   }
 };
