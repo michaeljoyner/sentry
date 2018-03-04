@@ -67,7 +67,8 @@ describe("Fetching general stats", () => {
       recent_failures: [
         {
           id: report.id,
-          page_name: "http://test.test"
+          page_name: "http://test.test",
+          created_at: report.created_at
         }
       ]
     };
