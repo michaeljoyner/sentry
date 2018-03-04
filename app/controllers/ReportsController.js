@@ -12,6 +12,6 @@ exports.index = async function(req, res, next) {
       id: f.id,
       page_name: f.page_name
     })),
-    last_checked: last_checked.unix()
+    last_checked
   });
 };

@@ -83,7 +83,7 @@ class StatusReport {
       .orderBy("created_at", "desc")
       .first();
 
-    return moment.unix(recent.created_at);
+    return recent ? recent.created_at : null;
   }
 
   async del() {

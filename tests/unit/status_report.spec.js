@@ -290,7 +290,7 @@ describe("Status Reports", () => {
     assert.equal("https://test.test", failures[0].page_name);
   });
 
-  it("can get the most recent time reported", async () => {
+  it("can get the most recent time reported as unix timestamp", async () => {
     const page = await Url.create("https://test.test");
     const most_recent_timestamp = moment()
       .subtract(5, "minutes")
@@ -325,6 +325,6 @@ describe("Status Reports", () => {
 
     const most_recent = await StatusReport.lastTimeReported();
 
-    assert.equal(most_recent_timestamp, most_recent.unix());
+    assert.equal(most_recent_timestamp, most_recent);
   });
 });
