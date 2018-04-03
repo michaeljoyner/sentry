@@ -30,8 +30,8 @@ exports.index = async function(req, res, next) {
 exports.create = async function(req, res, next) {
   const urls = asArray(req.body.url);
 
-  urls.forEach(async url => await Url.create(url));
-  res.json();
+  const created_urls = urls.map(async url => await Url.create(url));
+  res.json(created_urls);
 };
 
 exports.delete = async function(req, res, next) {
