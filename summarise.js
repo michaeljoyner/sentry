@@ -1,4 +1,7 @@
 require("dotenv").config();
-var ReportSummary = require("./app/models/ReportSummary");
+let ReportSummary = require("./app/models/ReportSummary");
+let db = require("./database/connection");
 
-ReportSummary.run();
+ReportSummary.run()
+  .then(() => db.destroy())
+  .catch(() => {});
