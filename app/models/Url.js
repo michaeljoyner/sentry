@@ -21,7 +21,7 @@ class Url {
     var [id] = await db("urls").insert({
       url: url,
       should_report: true,
-      created_at: moment().format("YYYY-MM-DD HH:MM:ss")
+      created_at: moment().format("YYYY-MM-DD HH:mm:ss")
     });
 
     return await Url.find(id);
@@ -56,7 +56,7 @@ class Url {
       .where("id", this.id)
       .update({
         should_report: this.should_report,
-        updated_at: moment().format("YYYY-MM-DD HH:MM:ss")
+        updated_at: moment().format("YYYY-MM-DD HH:mm:ss")
       });
   }
 
