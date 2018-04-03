@@ -30,7 +30,8 @@ class StatusReport {
       url_id: status_attributes.url_id,
       status: status_attributes.status,
       message: status_attributes.message,
-      created_at: status_attributes.created_at || moment().unix()
+      created_at:
+        status_attributes.created_at || moment().format("YYYY-MM-DD HH:MM:ss")
     });
 
     return await StatusReport.find(id);

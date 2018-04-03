@@ -21,7 +21,7 @@ class Url {
     var [id] = await db("urls").insert({
       url: url,
       should_report: true,
-      created_at: moment().unix()
+      created_at: moment().format("YYYY-MM-DD HH:MM:ss")
     });
 
     return await Url.find(id);
