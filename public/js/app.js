@@ -32628,7 +32628,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return "";
       }
 
-      return __WEBPACK_IMPORTED_MODULE_1_moment___default.a.unix(this.stats.last_checked).fromNow();
+      return __WEBPACK_IMPORTED_MODULE_1_moment___default()(this.stats.last_checked).fromNow();
     },
     success_percent: function success_percent() {
       var passed = this.stats.grand_totals.successes;

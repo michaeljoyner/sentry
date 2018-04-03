@@ -56,7 +56,7 @@ export default {
         return "";
       }
 
-      return moment.unix(this.stats.last_checked).fromNow();
+      return moment(this.stats.last_checked).fromNow();
     },
 
     success_percent() {
