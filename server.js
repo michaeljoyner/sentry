@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 let express = require("express");
 let app = express();
 let routes = require("./app/routes/routes");
