@@ -56,7 +56,7 @@ class Url {
       .where("id", this.id)
       .update({
         should_report: this.should_report,
-        updated_at: moment().unix()
+        updated_at: moment().format("YYYY-MM-DD HH:MM:ss")
       });
   }
 
