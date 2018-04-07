@@ -30,7 +30,7 @@ describe("Summarising old reports", () => {
           report.update({
             created_at: moment()
               .subtract(3, "days")
-              .unix()
+              .format("YYYY-MM-DD HH:mm:ss")
           })
         )
       )

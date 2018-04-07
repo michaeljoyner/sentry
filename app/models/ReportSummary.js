@@ -14,7 +14,7 @@ class ReportSummary {
   static async run() {
     const cutoff_timestamp = moment()
       .subtract(2, "days")
-      .unix();
+      .format("YYYY-MM-DD HH:mm:ss");
 
     const old_reports = await StatusReport.olderThan(cutoff_timestamp);
 
