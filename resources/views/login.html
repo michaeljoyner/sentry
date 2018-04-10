@@ -1,0 +1,42 @@
+<!doctype html>
+<html class="no-js h-full" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Login to Sentry</title>
+    <meta name="description" content="">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,900" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body class="font-sans flex items-center justify-center min-h-full">
+    <div class="max-w-sm w-full mx-auto shadow p-8">
+        <h3>Speak friend, and enter.</h3>
+        <form action="/login" method="POST">
+            <div class="my-4 flex items-center">
+                <label for="username">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20px">
+                        <path d="M5 5a5 5 0 0 1 10 0v2A5 5 0 0 1 5 7V5zM0 16.68A19.9 19.9 0 0 1 10 14c3.64 0 7.06.97 10 2.68V20H0v-3.32z" />
+                    </svg>
+                </label>
+                <input type="email" name="username" required class="h-8 flex-1 ml-3 border-b border-grey">
+            </div>
+            <div class="my-4 flex items-center">
+                <label for="password">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20px">
+                        <path d="M12.26 11.74L10 14H8v2H6v2l-2 2H0v-4l8.26-8.26a6 6 0 1 1 4 4zm4.86-4.62A3 3 0 0 0 15 2a3 3 0 0 0-2.12.88l4.24 4.24z"
+                        />
+                    </svg>
+                </label>
+                <input type="password" name="password" required class="h-8 flex-1 ml-3 border-b border-grey">
+            </div>
+            <div class="pt-8 flex justify-end">
+                <button type="submit" class="bg-black text-white font-bold shadow px-2 py-1 uppercase tracking-loose">Login</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

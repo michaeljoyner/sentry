@@ -1,15 +1,12 @@
 require("dotenv").config();
 
 let express = require("express");
-let app = express();
-let routes = require("./app/routes/routes");
-let bodyParser = require("body-parser");
+let app = require("./bootstrap/app")(express);
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+require("./bootstrap/auth")(app);
+require("./bootstrap/routes")(app);
 
-app.use(routes);
 app.use(express.static("public"));
-var server = app.listen(3030, () => {});
+let server = app.listen(3030, () => {});
 
 module.exports = server;
