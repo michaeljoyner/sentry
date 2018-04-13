@@ -15,6 +15,7 @@
     <div class="max-w-sm w-full mx-auto shadow p-8">
         <h3>Speak friend, and enter.</h3>
         <form action="/login" method="POST">
+            <input type="hidden" value="{{ csrf_token }}" name="_csrf">
             <div class="my-4 flex items-center">
                 <label for="username">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20px">

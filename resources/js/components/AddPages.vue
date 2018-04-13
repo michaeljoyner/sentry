@@ -42,7 +42,16 @@ export default {
 
     addUrls() {
       axios
-        .post("/urls", { url: this.selected_urls })
+        .post(
+          "/urls",
+          { url: this.selected_urls },
+          {
+            headers: {
+              "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
+                .content
+            }
+          }
+        )
         .then(() => this.$router.push("/url-list"))
         .catch(err => console.log(err));
     }

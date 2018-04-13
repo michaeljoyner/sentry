@@ -9,15 +9,13 @@ let AuthController = require("../controllers/AuthController");
 let isLoggedIn = require("../middleware/IsLoggedIn");
 
 router.get("/", isLoggedIn, function(req, res) {
-  return res.sendFile(
-    path.resolve(__dirname + "/../../resources/views/home.html")
-  );
+  const csrf_token = req.csrfToken();
+  return res.render("home", { csrf_token });
 });
 
 router.get("/login", function(req, res, next) {
-  return res.sendFile(
-    path.resolve(__dirname + "/../../resources/views/login.html")
-  );
+  const csrf_token = req.csrfToken();
+  return res.render("login", { csrf_token });
 });
 
 router.get("/urls", urlsController.index);
