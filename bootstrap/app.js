@@ -20,7 +20,12 @@ module.exports = function(express) {
       saveUninitialized: true
     })
   );
-  app.use(csrf({ cokies: false }));
+
+  const ignoreMethods =
+    process.env.NODE_ENV !== "production"
+      ? ["GET", "HEAD", "OPTIONS", "POST", "PUT", "DELETE"]
+      : ["GET", "HEAD", "OPTIONS"];
+  app.use(csrf({ cokies: false, ignoreMethods }));
 
   return app;
 };
