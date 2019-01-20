@@ -26,7 +26,12 @@ export default {
 
     deleteUrl() {
       axios
-        .delete(`/urls/${this.urlId}`)
+        .delete(`/urls/${this.urlId}`, {
+          headers: {
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
+              .content
+          }
+        })
         .then(() => this.$emit("url-deleted"))
         .catch(err => console.log(err));
     }

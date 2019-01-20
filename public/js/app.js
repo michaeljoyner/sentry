@@ -34455,7 +34455,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     deleteUrl: function deleteUrl() {
       var _this = this;
 
-      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("/urls/" + this.urlId).then(function () {
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete("/urls/" + this.urlId, {
+        headers: {
+          "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+        }
+      }).then(function () {
         return _this.$emit("url-deleted");
       }).catch(function (err) {
         return console.log(err);
