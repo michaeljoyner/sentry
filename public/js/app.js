@@ -32554,7 +32554,7 @@ exports = module.exports = __webpack_require__(7)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -32569,6 +32569,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
+//
+//
+//
+//
 //
 //
 //
@@ -32959,47 +32963,65 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("div", { staticClass: "p-4 m-4 shadow" }, [
-        _c("p", { staticClass: "text-green text-sm font-bold" }, [
-          _vm._v("Last checked")
+      _c("div", { staticClass: "p-4 m-4 shadow flex justify-between" }, [
+        _c("div", [
+          _c("p", { staticClass: "text-green text-sm font-bold" }, [
+            _vm._v("Last checked")
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-grey-darkest" }, [
+            _vm._v(_vm._s(_vm.last_checked_at))
+          ])
         ]),
         _vm._v(" "),
-        _c("p", { staticClass: "text-grey-darkest" }, [
-          _vm._v(_vm._s(_vm.last_checked_at))
+        _c("div", { staticClass: "flex flex-col items-end" }, [
+          _c("p", { staticClass: "text-green text-sm font-bold" }, [
+            _vm._v("No. of Pages")
+          ]),
+          _vm._v(" "),
+          _c(
+            "span",
+            { staticClass: "text-4xl text-grey-darkest font-black text-right" },
+            [_vm._v(_vm._s(this.stats.grand_totals.urls))]
+          )
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "flex p-4 my-8 mx-4 shadow" }, [
-        _c("div", { staticClass: "w-1/3" }, [
-          _c("p", { staticClass: "text-green text-sm font-bold" }, [
-            _vm._v("Total Pages")
+      _c(
+        "div",
+        { staticClass: "flex flex-col md:flex-row p-4 my-8 mx-4 shadow" },
+        [
+          _c("div", { staticClass: "w-full md:w-1/3 mb-6 md:mb-0" }, [
+            _c("p", { staticClass: "text-green text-sm font-bold" }, [
+              _vm._v("Success Rate")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "text-green text-3xl font-black" }, [
+              _vm._v(_vm._s(_vm.success_percent))
+            ])
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "text-green text-3xl font-black" }, [
-            _vm._v(_vm._s(this.stats.grand_totals.urls))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-1/3" }, [
-          _c("p", { staticClass: "text-green text-sm font-bold" }, [
-            _vm._v("Passed")
+          _c("div", { staticClass: "w-full md:w-1/3 mb-6 md:mb-0" }, [
+            _c("p", { staticClass: "text-green text-sm font-bold" }, [
+              _vm._v("Passed")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "text-green text-3xl font-black" }, [
+              _vm._v(_vm._s(this.stats.grand_totals.successes))
+            ])
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "text-green text-3xl font-black" }, [
-            _vm._v(_vm._s(this.stats.grand_totals.successes))
+          _c("div", { staticClass: "w-full md:w-1/3 mb-6 md:mb-0" }, [
+            _c("p", { staticClass: "text-green text-sm font-bold" }, [
+              _vm._v("Failed")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "text-green text-3xl font-black" }, [
+              _vm._v(_vm._s(this.stats.grand_totals.failures))
+            ])
           ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-1/3" }, [
-          _c("p", { staticClass: "text-green text-sm font-bold" }, [
-            _vm._v("Failed")
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "text-green text-3xl font-black" }, [
-            _vm._v(_vm._s(this.stats.grand_totals.failures))
-          ])
-        ])
-      ]),
+        ]
+      ),
       _vm._v(" "),
       _vm._l(_vm.stats.recent_failures, function(failure) {
         return _c("div", { key: failure.id, staticClass: "p-4 m-4" }, [
@@ -33011,17 +33033,7 @@ var render = function() {
             _vm._v(_vm._s(failure.page_name))
           ])
         ])
-      }),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "fixed pin-b pin-r m-4 font-black text-green" },
-        [
-          _c("span", { staticClass: "text-4xl" }, [
-            _vm._v(_vm._s(_vm.success_percent) + "%")
-          ])
-        ]
-      )
+      })
     ],
     2
   )

@@ -1,33 +1,37 @@
 <template>
   <div>
-    <div class="p-4 m-4 shadow">
-      <p class="text-green text-sm font-bold">Last checked</p>
-      <p class="text-grey-darkest">{{ last_checked_at }}</p>
+    <div class="p-4 m-4 shadow flex justify-between">
+      <div>
+        <p class="text-green text-sm font-bold">Last checked</p>
+        <p class="text-grey-darkest">{{ last_checked_at }}</p>
+      </div>
+      <div class="flex flex-col items-end">
+        <p class="text-green text-sm font-bold">No. of Pages</p>
+        <span
+          class="text-4xl text-grey-darkest font-black text-right"
+        >{{ this.stats.grand_totals.urls }}</span>
+      </div>
     </div>
-      
-      <div class="flex p-4 my-8 mx-4 shadow">
-        <div class="w-1/3">
-          <p class="text-green text-sm font-bold">Total Pages</p>
-          <p class="text-green text-3xl font-black">{{ this.stats.grand_totals.urls }}</p>
-        </div>
-        <div class="w-1/3">
-          <p class="text-green text-sm font-bold">Passed</p>
-          <p class="text-green text-3xl font-black">{{ this.stats.grand_totals.successes }}</p>
-        </div>
-        <div class="w-1/3">
-          <p class="text-green text-sm font-bold">Failed</p>
-          <p class="text-green text-3xl font-black">{{ this.stats.grand_totals.failures }}</p>
-        </div>
-      </div>
 
-      <div v-for="failure in stats.recent_failures" :key="failure.id" class="p-4 m-4">
-        <p class="text-red text-sm font-bold">Failed: {{ formattedDate(failure.created_at) }}</p>
-        <p class="text-grey-darkest whitespace-wrap">{{ failure.page_name }}</p>
+    <div class="flex flex-col md:flex-row p-4 my-8 mx-4 shadow">
+      <div class="w-full md:w-1/3 mb-6 md:mb-0">
+        <p class="text-green text-sm font-bold">Success Rate</p>
+        <p class="text-green text-3xl font-black">{{ success_percent }}</p>
       </div>
-      
-      <div class="fixed pin-b pin-r m-4 font-black text-green">
-          <span class="text-4xl">{{ success_percent }}%</span>
+      <div class="w-full md:w-1/3 mb-6 md:mb-0">
+        <p class="text-green text-sm font-bold">Passed</p>
+        <p class="text-green text-3xl font-black">{{ this.stats.grand_totals.successes }}</p>
       </div>
+      <div class="w-full md:w-1/3 mb-6 md:mb-0">
+        <p class="text-green text-sm font-bold">Failed</p>
+        <p class="text-green text-3xl font-black">{{ this.stats.grand_totals.failures }}</p>
+      </div>
+    </div>
+
+    <div v-for="failure in stats.recent_failures" :key="failure.id" class="p-4 m-4">
+      <p class="text-red text-sm font-bold">Failed: {{ formattedDate(failure.created_at) }}</p>
+      <p class="text-grey-darkest whitespace-wrap">{{ failure.page_name }}</p>
+    </div>
   </div>
 </template>
 
@@ -64,7 +68,7 @@ export default {
       const total =
         this.stats.grand_totals.successes + this.stats.grand_totals.failures;
 
-      return Math.round(passed / total * 100);
+      return Math.round((passed / total) * 100);
     }
   },
 
@@ -88,7 +92,6 @@ export default {
 </script>
 
 <style scoped lang="css" type="text/css">
-
 </style>
 
 
