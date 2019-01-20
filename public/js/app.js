@@ -32997,7 +32997,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("p", { staticClass: "text-green text-3xl font-black" }, [
-              _vm._v(_vm._s(_vm.success_percent))
+              _vm._v(_vm._s(_vm.success_percent) + "%")
             ])
           ]),
           _vm._v(" "),

@@ -16,7 +16,7 @@
     <div class="flex flex-col md:flex-row p-4 my-8 mx-4 shadow">
       <div class="w-full md:w-1/3 mb-6 md:mb-0">
         <p class="text-green text-sm font-bold">Success Rate</p>
-        <p class="text-green text-3xl font-black">{{ success_percent }}</p>
+        <p class="text-green text-3xl font-black">{{ success_percent }}%</p>
       </div>
       <div class="w-full md:w-1/3 mb-6 md:mb-0">
         <p class="text-green text-sm font-bold">Passed</p>
