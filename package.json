@@ -33,7 +33,7 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
     "knex": "^0.16.3",
-    "laravel-mix": "^1.7.2",
+    "laravel-mix": "^5.0",
     "moment": "^2.20.1",
     "mysql": "^2.15.0",
     "passport": "^0.4.0",
